@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Davina Branding and Styling Enterprise</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/favicon-logo.png">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    .product-card {
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+
+    .product-card img {
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.3s;
+      cursor: zoom-in;
+    }
+
+    .product-card:hover img {
+      transform: scale(1.05);
+    }
+
+    footer { background: #343a40; color: white; padding: 20px 0; }
+    #cart-items li { font-size: 14px; }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.9; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .logo-animated {
+      animation: pulse 3s infinite ease-in-out;
+      transition: transform 0.3s ease;
+    }
+    .logo-animated:hover {
+      transform: scale(1.1);
+    }
+
+    #lightbox {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    #lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 8px;
+      box-shadow: 0 0 20px #fff;
+    }
+
+    #lightbox:target {
+      display: flex;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Lightbox -->
+<div id="lightbox" onclick="this.style.display='none'">
+  <img id="lightbox-img" src="" alt="Preview" />
+</div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+      <img src="images/Davina-logo.png" alt="Davina Logo" style="height: 40px;" class="logo-animated">
+      <span class="fw-bold text-light">Davina Enterprise</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#products">Products</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        <li class="nav-item">
+          <a class="nav-link position-relative" href="#" data-bs-toggle="offcanvas" data-bs-target="#cartSidebar">
+            🛒 Cart <span class="badge bg-danger" id="cart-count">0</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="bg-light p-5 text-center">
+  <h1>Welcome to Davina Branding & Styling Enterprise</h1>
+  <p class="lead">A home for unique products that elevate your style and brand identity.</p>
+</section>
+
+<!-- Products -->
+<section id="products" class="container py-5">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+    <div class="col">
+      <div class="card product-card">
+        <img src="Images/H1.jpg" class="card-img-top preview-img" alt="Hair">
+        <div class="card-body">
+          <h5 class="card-title">Brazillian Hair</h5>
+          <p class="card-text">₦30,000</p>
+          <button class="btn btn-primary w-100 add-to-cart" data-name="Brazillian hair" data-price="30000">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card product-card">
+        <img src="Images/H6.jpg" class="card-img-top preview-img" alt="Tote Bag">
+        <div class="card-body">
+          <h5 class="card-title">Stylish Frontals</h5>
+          <p class="card-text">₦75,500</p>
+          <button class="btn btn-primary w-100 add-to-cart" data-name="Stylish Frontals" data-price="75500">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Cart Sidebar -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="cartSidebar">
+  <div class="offcanvas-header">
+    <h5>Shopping Cart</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul class="list-group mb-3" id="cart-items"></ul>
+    <h6>Total: ₦<span id="cart-total">0.00</span></h6>
+    <button class="btn btn-success w-100 mt-3">Checkout</button>
+  </div>
+</div>
+
+<!-- Contact -->
+<section id="contact" class="container py-5">
+  <h2 class="text-center mb-4">Contact Davina Enterprise</h2>
+
+  <div id="thank-you" class="alert alert-success text-center d-none">
+    🎉 Thank you for contacting us! We'll get back to you soon.
+  </div>
+
+  <div id="form-spinner" class="text-center my-4 d-none">
+    <div class="spinner-border text-primary" role="status"></div>
+    <p class="mt-2">Sending message...</p>
+  </div>
+
+  <form id="contact-form" action="https://formspree.io/f/mkgbldbb" method="POST" class="mx-auto" style="max-width: 500px;">
+    <div class="mb-3">
+      <label class="form-label">Full Name</label>
+      <input type="text" class="form-control" name="name" required />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Email address</label>
+      <input type="email" class="form-control" name="email" required />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Message</label>
+      <textarea class="form-control" name="message" rows="4" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Send Message</button>
+  </form>
+</section>
+
+<!-- Toast Notification -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050">
+  <div id="cart-toast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        ✅ Item added to cart!
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="text-center">
+  <div class="container">
+    <p>&copy; 2025 Davina Branding & Styling Enterprise. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const cart = [];
+  const cartItems = document.getElementById("cart-items");
+  const cartTotal = document.getElementById("cart-total");
+  const cartCount = document.getElementById("cart-count");
+
+  document.querySelectorAll(".add-to-cart").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const name = btn.dataset.name;
+      const price = parseFloat(btn.dataset.price);
+      cart.push({ name, price });
+      updateCart();
+
+      const toastEl = document.getElementById("cart-toast");
+      const toast = new bootstrap.Toast(toastEl);
+      toast.show();
+    });
+  });
+
+  function updateCart() {
+    cartItems.innerHTML = '';
+    let total = 0;
+    cart.forEach((item, index) => {
+      const li = document.createElement("li");
+      li.className = "list-group-item d-flex justify-content-between";
+      li.innerHTML = `
+        ${item.name} - ₦${item.price.toLocaleString()}
+        <button class="btn btn-sm btn-danger" onclick="removeItem(${index})">x</button>
+      `;
+      cartItems.appendChild(li);
+      total += item.price;
+    });
+    cartTotal.textContent = total.toLocaleString();
+    cartCount.textContent = cart.length;
+  }
+
+  function removeItem(index) {
+    cart.splice(index, 1);
+    updateCart();
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  const form = document.getElementById("contact-form");
+  const thankYou = document.getElementById("thank-you");
+  const spinner = document.getElementById("form-spinner");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    spinner.classList.remove("d-none");
+    form.classList.add("d-none");
+
+    const formData = new FormData(form);
+    fetch(form.action, {
+      method: "POST",
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(response => {
+      spinner.classList.add("d-none");
+      thankYou.classList.remove("d-none");
+      form.reset();
+    })
+    .catch(error => {
+      spinner.classList.add("d-none");
+      form.classList.remove("d-none");
+      alert("Oops! Something went wrong. Please try again.");
+    });
+  });
+
+  document.querySelectorAll(".preview-img").forEach(img => {
+    img.addEventListener("click", () => {
+      document.getElementById("lightbox-img").src = img.src;
+      document.getElementById("lightbox").style.display = "flex";
+    });
+  });
+</script>
+
+</body>
+</html>
